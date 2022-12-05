@@ -13,45 +13,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import fr.m2i.certif.model.Message;
 import fr.m2i.certif.model.User;
+import fr.m2i.certif.service.MessageService;
 import fr.m2i.certif.service.UserService;
 
 @RestController
-@RequestMapping(path="/user")
-public class UserController {
+@RequestMapping(path="/message")
+public class MessageController {
 
 	@Autowired
-	UserService userService;
+	MessageService messageService;
 	
 	@GetMapping(path = "/list", produces = {"application/json"})
-	public List<User> getUsers(){
+	public List<Message> getMessages(){
 		
-		return userService.getAll();
+		return messageService.getAll();
 	}
 	
 	
-	/*@GetMapping(path = "/find/{id}", produces = {"application/json"})
+	/*@GetMapping(path = "/find/{id}")
 	public User getUser(@PathVariable("id") Long id) { 
 	
-	return userService.getUserById(id);
+	userService.getUser(id);
 }*/
 
 	@PostMapping(path = "/post", // path / url
 			consumes = { "application/json" } // négociation de contenu / par défaut JSON
 	)
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void postUser(@RequestBody User user) {
+	public void postMessage(@RequestBody Message message) {
 
-		userService.saveUser(user);
+		messageService.saveMessage(message);
 	}
 	
 	@DeleteMapping(path = "/delete/{id}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void deleteUser(@PathVariable("id") Long id) {
+	public void deleteMessage(@PathVariable("id") Long id) {
 
-		userService.deleteUser(id);
-		System.out.println("user effacé");
+		messageService.deleteMessage(id);
+		System.out.println("message effacé");
 
 	}
 	
