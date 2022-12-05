@@ -13,6 +13,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.JoinColumn;
 
 import lombok.Data;
@@ -51,6 +54,7 @@ public class User implements Serializable {
     )
 	private List<Channel> channels;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade=CascadeType.ALL)
 	private List<Message> messages;
 	

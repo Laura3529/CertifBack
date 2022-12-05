@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -26,7 +28,7 @@ private static final long serialVersionUID = 1L;
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false, length = 255, name = "name")
+	@Column(nullable = false, length = 255, name = "channel_name")
 	private String name;
 	
 	@Column(nullable = false, name = "created_at")
@@ -38,6 +40,7 @@ private static final long serialVersionUID = 1L;
 	@Column(nullable = false, length = 255, name = "description")
 	private String description;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
 	private List<Message> messages;
 	
