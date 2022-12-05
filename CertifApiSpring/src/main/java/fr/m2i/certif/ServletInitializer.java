@@ -1,4 +1,4 @@
-package fr.m2i.AppWebToDo;
+package fr.m2i.certif;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,4 +1,4 @@
-package fr.m2i.AppWebToDo;
+package fr.m2i.certif;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
