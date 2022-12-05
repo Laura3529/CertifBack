@@ -13,21 +13,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import fr.m2i.certif.model.Channel;
 import fr.m2i.certif.model.User;
+import fr.m2i.certif.service.ChannelService;
 import fr.m2i.certif.service.UserService;
 
 @RestController
-@RequestMapping(path="/user")
-public class UserController {
+@RequestMapping(path="/channel")
+public class ChannelController {
 
 	@Autowired
-	UserService userService;
+	ChannelService channelService;
 	
 	@GetMapping(path = "/list", produces = {"application/json"})
-	public List<User> getUsers(){
+	public List<Channel> getChannels(){
 		
-		return userService.getAll();
+		return channelService.getAll();
 	}
 	
 	
@@ -41,17 +42,17 @@ public class UserController {
 			consumes = { "application/json" } // négociation de contenu / par défaut JSON
 	)
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void postUser(@RequestBody User user) {
+	public void postChannel(@RequestBody Channel channel) {
 
-		userService.saveUser(user);
+		channelService.saveChannel(channel);
 	}
 	
 	@DeleteMapping(path = "/delete/{id}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void deleteUser(@PathVariable("id") Long id) {
+	public void deleteChannel(@PathVariable("id") Long id) {
 
-		userService.deleteUser(id);
-		System.out.println("user effacé");
+		channelService.deleteChannel(id);
+		System.out.println("channel effacé");
 
 	}
 	

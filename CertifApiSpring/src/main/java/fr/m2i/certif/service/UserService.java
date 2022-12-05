@@ -22,7 +22,16 @@ public class UserService {
 
 	/*public User getUserById(Long id){
 		
-		User user = ur.;
+		User user = new User();
+		
+		List<User> users = ur.findAll();
+		for(User u : users) {
+			if(u.getId() == id) {
+				user = u;
+			} else {
+				user = null;
+			}
+		}
 		return user;
 	}*/
 	
