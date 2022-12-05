@@ -45,7 +45,7 @@ public class User implements Serializable {
 	
 	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
-        name="user_channel",
+        name="users_channels",
         joinColumns = { @JoinColumn(name="user_id") },
         inverseJoinColumns = {@JoinColumn(name="channel_id") }
     )
