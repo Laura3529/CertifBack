@@ -1,16 +1,14 @@
 package fr.m2i.certif.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import fr.m2i.certif.model.Message;
-import fr.m2i.certif.model.User;
 import fr.m2i.certif.repository.MessageRepository;
-import fr.m2i.certif.repository.UserRepository;
 
 @Service
 public class MessageService {
@@ -22,22 +20,21 @@ public class MessageService {
 		return mr.findAll();
 	}
 
-//	public Message getMessageById(Long id){
-//		
-//		Message message = new Message();
-//		
-//		List<Message> messages = mr.findAll();
-//		for(Message u : messages) {
-//			if(u.getId() == id) {
-//				message = u;
-//			} else {
-//				message = null;
-//			}
-//		}
-//		return message;
-//	}
+	public Optional<Message> getMessageById(Long id) { 
+		Optional<Message> message = mr.findById(id);
+		return message;
+	}
 	
 	public void saveMessage(Message message) {
+		mr.save(message);
+	}
+	
+	public void saveUser(String content, LocalDateTime createdAt, LocalDateTime updatedAt) {
+		Message message = new Message();
+		message.setContent(content);
+		message.setCreatedAt(createdAt);
+		message.setUpdatedAt(updatedAt);
+
 		mr.save(message);
 	}
 	
