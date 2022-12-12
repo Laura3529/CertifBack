@@ -37,18 +37,18 @@ public class UserController {
 	@GetMapping(path = "/find/{id}", produces = {"application/json"})
 		public Optional<User> getUser(@PathVariable("id") Long id) {
 
-		return userService.getUserById(id);
+		return userService.getById(id);
 	}
 
 	
 	//POST create
-	@PostMapping(path = "/post", // path / url
-			consumes = { "application/json" } // négociation de contenu / par défaut JSON
+	@PostMapping(path = "/post", 
+			consumes = { "application/json" } 
 	)
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void postUser(@RequestBody User user) {
 
-		userService.saveUser(user);
+		userService.saveObject(user);
 	}
 	
 	
@@ -59,13 +59,13 @@ public class UserController {
 	)
 	public void modifUser(@PathVariable("id") Long id, @RequestBody User newUser) {
 		
-		User user = userService.getUserById(id).get();
+		User user = userService.getById(id).get();
 		user.setLastname(newUser.getLastname());
 		user.setFirstname(newUser.getFirstname());
 		user.setPseudo(newUser.getPseudo());
 		user.setEmail(newUser.getEmail());		
 		
-		userService.saveUser(user);
+		userService.saveObject(user);
 	}
 	
 	
@@ -74,7 +74,7 @@ public class UserController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void deleteUser(@PathVariable("id") Long id) {
 
-		userService.deleteUser(id);
+		userService.deleteObject(id);
 		System.out.println("user effacé");
 
 	}
