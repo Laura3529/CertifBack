@@ -13,18 +13,18 @@ import fr.m2i.certif.model.Message;
 public class MessageService extends ObjectService<Message> {
 
 	@Override
-	public void saveObject(Message t) {
+	public void saveObject(Message m) {
 
 		LocalDateTime defaultDate = LocalDateTime.now();
 		
-		if(t.getCreatedAt() == null) {
-			t.setCreatedAt(defaultDate);
+		if(m.getCreatedAt() == null) {
+			m.setCreatedAt(defaultDate);
 		}
 		
-		if(t.getUpdatedAt() == null) {
-			t.setUpdatedAt(defaultDate);
+		if(m.getUpdatedAt() == null) {
+			m.setUpdatedAt(defaultDate);
 		}
-		super.saveObject(t);
+		super.saveObject(m);
 	}
 	
 	
