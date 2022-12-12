@@ -19,33 +19,33 @@ import lombok.Data;
 @Data
 @Table(name="messages")
 public class Message implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Column(nullable = false, length = 255, name = "content")
 	private String content;
-	
+
 	@Column(nullable = false, name = "created_at")
 	private LocalDateTime createdAt;
-	
+
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
-	
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Channel channel;
-	
-	
+
+
 	@Override
 	public String toString() {
 		return this.id + " : " + this.content + " " + this.createdAt + " " + this.updatedAt;
 	}
-	
+
 
 }
