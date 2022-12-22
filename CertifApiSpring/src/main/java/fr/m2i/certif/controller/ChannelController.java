@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.m2i.certif.model.Channel;
+import fr.m2i.certif.model.Message;
 import fr.m2i.certif.service.ChannelService;
+import fr.m2i.certif.service.MessageService;
 
 @RestController
 @RequestMapping(path="/channel")
@@ -24,6 +26,16 @@ public class ChannelController {
 
 	@Autowired
 	ChannelService channelService;
+	
+	@Autowired
+	MessageService messageService;
+	
+//	 lien avec les messages
+	@GetMapping(path = "/listMessages/{id}", produces = {"application/json"})
+	public List<Message> getMessagesChannel(@PathVariable("id") Long id){
+		return channelService.getMessages(id);
+	}
+	
 	
 	@GetMapping(path = "/list", produces = {"application/json"})
 	public List<Channel> getChannels(){
