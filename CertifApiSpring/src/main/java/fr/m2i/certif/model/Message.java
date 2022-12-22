@@ -35,10 +35,10 @@ public class Message implements Serializable {
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER,  cascade=CascadeType.MERGE)
 	private User user;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
 	private Channel channel;
 
 
