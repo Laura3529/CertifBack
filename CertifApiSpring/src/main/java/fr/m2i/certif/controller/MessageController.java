@@ -34,16 +34,16 @@ public class MessageController {
 	@GetMapping(path = "/find/{id}", produces = {"application/json"})
 	public Optional<Message> getMessage(@PathVariable("id") Long id) {
 
-	return messageService.getMessageById(id);
+	return messageService.getById(id);
 	}
 
-	@PostMapping(path = "/post", // path / url
-			consumes = { "application/json" } // négociation de contenu / par défaut JSON
+	@PostMapping(path = "/post", 
+			consumes = { "application/json" } 
 	)
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void postMessage(@RequestBody Message message) {
 
-		messageService.saveMessage(message);
+		messageService.saveObject(message);
 	}
 	
 	@PutMapping(path = "/put/{id}", 
@@ -52,19 +52,19 @@ public class MessageController {
 	)
 	public void modifMessage(@PathVariable("id") Long id, @RequestBody Message newMessage) {
 		
-		Message message = messageService.getMessageById(id).get();
+		Message message = messageService.getById(id).get();
 		message.setContent(newMessage.getContent());
 		message.setCreatedAt(newMessage.getCreatedAt());
 		message.setUpdatedAt(newMessage.getUpdatedAt());		
 		
-		messageService.saveMessage(message);
+		messageService.saveObject(message);
 	}
 	
 	@DeleteMapping(path = "/delete/{id}")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public void deleteMessage(@PathVariable("id") Long id) {
 
-		messageService.deleteMessage(id);
+		messageService.deleteObject(id);
 		System.out.println("message effacé");
 
 	}

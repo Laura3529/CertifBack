@@ -1,47 +1,51 @@
 package fr.m2i.certif.service;
 
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.m2i.certif.model.Channel;
-import fr.m2i.certif.repository.ChannelRepository;
+import fr.m2i.certif.model.Message;
+
 
 @Service
-public class ChannelService {
-
+public class ChannelService extends ObjectService<Channel> {
+	
 	@Autowired
-	ChannelRepository cr;
-
-	public List<Channel> getAll() {
-		return cr.findAll();
-	}
+	MessageService messageService;
+	//public JpaRepository<Message, Long> messageRepository;
 	
-	public Optional<Channel> getChannelById(Long id) { 
-		Optional<Channel> channel = cr.findById(id);
-		return channel;
-	}
+	@Override
+	public void saveObject(Channel c) {
 
-
-	public void saveChannel(Channel channel) {
-		cr.save(channel);
-	}
-
-	//Pas utilise pour le moment
-		public void saveChannel(String name, LocalDateTime createdAt, LocalDateTime updatedAt, String description) {
-			Channel channel = new Channel();
-			channel.setName(name);
-			channel.setCreatedAt(createdAt);
-			channel.setUpdatedAt(updatedAt);
-			channel.setDescription(description);
-			
-			cr.save(channel);
+		LocalDateTime defaultDate = LocalDateTime.now();
+		
+		if(c.getCreatedAt() == null) {
+			c.setCreatedAt(defaultDate);
 		}
+		
+		if(c.getUpdatedAt() == null) {
+			c.setUpdatedAt(defaultDate);
+		}
+		super.saveObject(c);
+	}
 	
-	public void deleteChannel(Long id) {
-		cr.deleteById(id);
+	public List<Message> getMessages(Long id) {
+		List<Message> messages = new ArrayList<Message>();
+		List<Message> messagesChannel = new ArrayList<Message>();
+		
+		messages = messageService.getAll();
+		for(Message m : messages) {
+			if(id == m.getChannel().getId()) {
+				messagesChannel.add(m);
+			}
+		}
+		
+		return messagesChannel;
 	}
 }
