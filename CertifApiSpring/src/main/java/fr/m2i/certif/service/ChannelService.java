@@ -1,38 +1,51 @@
 package fr.m2i.certif.service;
 
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import fr.m2i.certif.model.Channel;
+import fr.m2i.certif.model.Message;
 
-import fr.m2i.certif.repository.ChannelRepository;
 
 @Service
-public class ChannelService {
-
+public class ChannelService extends ObjectService<Channel> {
+	
 	@Autowired
-	ChannelRepository cr;
+	MessageService messageService;
+	//public JpaRepository<Message, Long> messageRepository;
+	
+	@Override
+	public void saveObject(Channel c) {
 
-	public List<Channel> getAll() {
-		return cr.findAll();
+		LocalDateTime defaultDate = LocalDateTime.now();
+		
+		if(c.getCreatedAt() == null) {
+			c.setCreatedAt(defaultDate);
+		}
+		
+		if(c.getUpdatedAt() == null) {
+			c.setUpdatedAt(defaultDate);
+		}
+		super.saveObject(c);
 	}
-
-	/*
-	 * public User getUserById(Long id){
-	 * 
-	 * User user = new User();
-	 * 
-	 * List<User> users = ur.findAll(); for(User u : users) { if(u.getId() == id) {
-	 * user = u; } else { user = null; } } return user; }
-	 */
-
-	public void saveChannel(Channel channel) {
-		cr.save(channel);
-	}
-
-	public void deleteChannel(Long id) {
-		cr.deleteById(id);
+	
+	public List<Message> getMessages(Long id) {
+		List<Message> messages = new ArrayList<Message>();
+		List<Message> messagesChannel = new ArrayList<Message>();
+		
+		messages = messageService.getAll();
+		for(Message m : messages) {
+			if(id == m.getChannel().getId()) {
+				messagesChannel.add(m);
+			}
+		}
+		
+		return messagesChannel;
 	}
 }

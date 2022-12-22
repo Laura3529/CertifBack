@@ -1,47 +1,31 @@
 package fr.m2i.certif.service;
 
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.time.LocalDateTime;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import fr.m2i.certif.model.Message;
-import fr.m2i.certif.model.User;
-import fr.m2i.certif.repository.MessageRepository;
-import fr.m2i.certif.repository.UserRepository;
 
 @Service
-public class MessageService {
-	
-	@Autowired
-	MessageRepository mr;
-	
-	public List<Message> getAll(){
-		return mr.findAll();
-	}
+public class MessageService extends ObjectService<Message> {
 
-//	public Message getMessageById(Long id){
-//		
-//		Message message = new Message();
-//		
-//		List<Message> messages = mr.findAll();
-//		for(Message u : messages) {
-//			if(u.getId() == id) {
-//				message = u;
-//			} else {
-//				message = null;
-//			}
-//		}
-//		return message;
-//	}
-	
-	public void saveMessage(Message message) {
-		mr.save(message);
+	@Override
+	public void saveObject(Message m) {
+
+		LocalDateTime defaultDate = LocalDateTime.now();
+		
+		if(m.getCreatedAt() == null) {
+			m.setCreatedAt(defaultDate);
+		}
+		
+		if(m.getUpdatedAt() == null) {
+			m.setUpdatedAt(defaultDate);
+		}
+		super.saveObject(m);
 	}
 	
-	public void deleteMessage(Long id) {
-		mr.deleteById(id);
-	}
+	
 }
